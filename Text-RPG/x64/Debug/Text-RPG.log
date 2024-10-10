@@ -1,0 +1,5 @@
+﻿  Text-RPG.cpp
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(32,45): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(44,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(55,39): warning C4267: -=: преобразование из "size_t" в "int"; возможна потеря данных
+  Text-RPG.vcxproj -> C:\Users\MKA\Documents\GitHub\Text-RPG\x64\Debug\Text-RPG.exe
