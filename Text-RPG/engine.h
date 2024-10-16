@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <windows.h>
 #include <chrono>
@@ -8,6 +9,23 @@ using namespace std;
 
 void sleep(int x) {
     std::this_thread::sleep_for(std::chrono::milliseconds(x));
+}
+
+void clear() {
+    COORD topLeft  = { 0, 0 };
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen;
+    DWORD written;
+
+    GetConsoleScreenBufferInfo(console, &screen);
+    FillConsoleOutputCharacterA(
+        console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+    );
+    FillConsoleOutputAttribute(
+        console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
+        screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+    );
+    SetConsoleCursorPosition(console, topLeft);
 }
 
 void SetConsoleFontSize(int fontSize) {
@@ -20,7 +38,7 @@ void SetConsoleFontSize(int fontSize) {
     SetCurrentConsoleFontEx(hConsole, FALSE, &fontInfo);
 }
 
-void gotoxy(int x, int y) {
+void gotoxy(short int x, short int y) {
     COORD pos = { x, y };
     HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorPosition(output, pos);
@@ -49,6 +67,7 @@ void margin(int len,char fill) {
         cout << fill;
     }
 }
+
 void split(int len,string* options, char fill) {
     cout << "*";
     for (int i = 0; i < len; i++) {
@@ -59,7 +78,6 @@ void split(int len,string* options, char fill) {
     }
     cout << "*";
 }
-// 120x30
 
 int countStrings(string* options, int len, int offset) {
     int sum = 0;
@@ -71,12 +89,8 @@ int countStrings(string* options, int len, int offset) {
 
 void display(string* options,int len,char split_fill) {
     int consolewidth = getTerminalSize_WIDTH();
-    int uiTextSize = countStrings(options,len,3);
+    int uiTextSize = countStrings(options,len,0) + 5;
     int medium = (int)((consolewidth / 2) - (uiTextSize / 2));
-
-    for (int i = 0; i < len; i++) {
-        medium -= options[i].length() - 3;
-    }
     margin(medium, split_fill);
     split(len, options, '-');
     margin(medium-6, split_fill);
@@ -92,13 +106,31 @@ void display(string* options,int len,char split_fill) {
     margin(medium-6, split_fill);
 }
 
-void title(string title, char split_fill) {
+void info(string data, short int x, short int y){
+    gotoxy(x,y);
+    cout << data;
+    gotoxy(0,0);
+}
+
+void title_down(string title, char split_fill) {
     int consolewidth = getTerminalSize_WIDTH();
     int uiTextSize = title.length();
-    int medium = (int)((consolewidth / 2) - (uiTextSize / 2));
+    int medium = (int)((consolewidth / 2) - (uiTextSize / 2)) - 1;
     margin(medium*2 + uiTextSize + 1, split_fill);
 
     cout << endl;
     margin(medium, ' ');
     cout << title;
+}
+
+void title_up(string title, char split_fill) {
+    int consolewidth = getTerminalSize_WIDTH();
+    int uiTextSize = title.length();
+    int medium = (int)((consolewidth / 2) - (uiTextSize / 2)) - 1;
+    margin(medium, ' ');
+    cout << title;
+    cout << endl;
+    margin(medium*2 + uiTextSize + 1, split_fill);
+
+    
 }

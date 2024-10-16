@@ -5,25 +5,44 @@
 
 using namespace std;
 
+void main_game(){
+	clear();
+	
+	gotoxy(0, 8);
+	title_up((string)("Abilities"), '-');
+
+	gotoxy(0, 50);
+	title_down((string)("Statistics"), '-');
+	for (int i = 50; i < 65; i++){
+		gotoxy(29, i);
+		if (i == 50){cout << "#";}
+		else{cout << "|";}
+	}
+
+	while (true){
+		
+	}
+}
+
 void menu() {
+	setlocale(LC_ALL, "Russian");
 	int option = 0;
 
 	HWND console = GetConsoleWindow();
 	RECT r;
-	string test[3]{ "Quit", "Start", "Quests" };
-	string Title = "Statistics";
+	string test[3]{ "Quit", "Start game", "Settings" };
+	string Title = "Authors";
 
 	SetConsoleFontSize(16);
-	setlocale(LC_ALL, "Russian");
 
 	GetWindowRect(console, &r);
 
 	MoveWindow(console, 0, 0, 1920, 1080, TRUE);
 	SetWindowPos(console, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
+	
 	display(test, 3, '-');
 	gotoxy(0, 50);
-	title(Title, '-');
+	title_down(Title, '-');
 	bool quit = false;
 	while (!quit) {
 		gotoxy((getTerminalSize_WIDTH() / 2) - 15, 5);
@@ -46,7 +65,11 @@ void menu() {
 			case 0:
 				quit = !quit;
 				break;
+			case 1:
+				main_game();
+				break;
 			}
 		}
 	}
 }
+
