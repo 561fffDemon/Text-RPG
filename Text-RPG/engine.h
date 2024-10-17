@@ -168,3 +168,12 @@ void TextAnimCenter(int delay,string text,int y){
 		sleep(delay * mult);
 	}
 }
+
+void draw_options(int x,int y, string* options, int len, int choiced) {
+    for (int i = 0; i < len; i++) {
+        gotoxy(x, y + i);
+        if (i == choiced) cout << "*";
+        else cout << " ";
+        cout << " " << options[i];
+    }
+}

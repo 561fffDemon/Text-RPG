@@ -1,8 +1,6 @@
 ﻿  Text-RPG.cpp
-C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(24,19): warning C4838: Преобразование из "int" в "SHORT" требует сужающего преобразования.
-C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(24,22): warning C4838: Преобразование из "int" в "SHORT" требует сужающего преобразования.
-C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(55,45): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(67,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(78,39): warning C4267: -=: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(97,36): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(74,45): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(85,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(117,36): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\MKA\Documents\GitHub\Text-RPG\Text-RPG\engine.h(141,36): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
   Text-RPG.vcxproj -> C:\Users\MKA\Documents\GitHub\Text-RPG\x64\Debug\Text-RPG.exe
