@@ -123,6 +123,19 @@ void title_down(string title, char split_fill) {
     cout << title;
 }
 
+void draw_popup(short int x, short int y, int width, int height, char fill){
+    for (int _y = y; _y < y+height; _y++){
+        for (int _x = x; _x < x+width; _x++){
+            gotoxy(_x,_y);
+            if (((_y == y) || (_y == y+height-1)) && ((_x == x) || (_x == x+width-1))) cout << "#";
+            else if ((_x == x) || (_x == x+width-1)) cout << "|";
+            else if ((_y == y) || (_y == y+height-1)) cout << "-";
+            else cout << fill;
+        }
+    }
+    
+}
+
 void title_up(string title, char split_fill) {
     int consolewidth = getTerminalSize_WIDTH();
     int uiTextSize = title.length();
@@ -133,4 +146,25 @@ void title_up(string title, char split_fill) {
     margin(medium*2 + uiTextSize + 1, split_fill);
 
     
+}
+
+void TextAnim(int delay,string text){
+    int mult = 1;
+	for (int i = 0; i < text.size(); i++){
+		cout << text[i];
+        if (text[i] == ((string)".")[0]) mult = 50;
+        else mult = 1;
+		sleep(delay * mult);
+	}
+}
+
+void TextAnimCenter(int delay,string text,int y){
+    int mult = 1;
+    gotoxy((int)(getTerminalSize_WIDTH() / 2) - (int)(text.size() / 2),y);
+	for (int i = 0; i < text.size(); i++){
+		cout << text[i];
+        if (text[i] == ((string)".")[0]) mult = 50;
+        else mult = 1;
+		sleep(delay * mult);
+	}
 }
