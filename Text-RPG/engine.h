@@ -4,13 +4,43 @@
 #include <windows.h>
 #include <chrono>
 #include <thread>
+#include <sstream>
+#include <string>
 
 using namespace std;
+
+template <typename T> string tostr(const T& t) {
+	ostringstream os;
+	os << t;
+	return os.str();
+}
+
+struct Weapon
+{
+	float Damage;
+	int Durability;
+	int TakeMana;
+	string Name;
+	string Description;
+};
+struct Entity
+{
+	float HP;
+	float Defence;
+	float Mana;
+    string Name;
+    string Description;
+	Weapon FirstWeapon;
+	Weapon SecondWeapon;
+    
+};
 
 void sleep(int x) {
     std::this_thread::sleep_for(std::chrono::milliseconds(x));
 }
-
+string getColor(int color) {
+    return (string)"\033[" + tostr(color) + (string)"m";
+}
 void clear() {
     COORD topLeft  = { 0, 0 };
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -112,7 +142,7 @@ void info(string data, short int x, short int y){
     gotoxy(0,0);
 }
 
-void title_down(string title, char split_fill) {
+void title_down(string title, char split_fill, string color) {
     int consolewidth = getTerminalSize_WIDTH();
     int uiTextSize = title.length();
     int medium = (int)((consolewidth / 2) - (uiTextSize / 2)) - 1;
@@ -120,33 +150,32 @@ void title_down(string title, char split_fill) {
 
     cout << endl;
     margin(medium, ' ');
-    cout << title;
+    cout << color << title << getColor(0);
 }
 
-void draw_popup(short int x, short int y, int width, int height, char fill){
+void draw_popup(short int x, short int y, int width, int height, char fill, char corner, char h, char v){
     for (int _y = y; _y < y+height; _y++){
         for (int _x = x; _x < x+width; _x++){
             gotoxy(_x,_y);
-            if (((_y == y) || (_y == y+height-1)) && ((_x == x) || (_x == x+width-1))) cout << "#";
-            else if ((_x == x) || (_x == x+width-1)) cout << "|";
-            else if ((_y == y) || (_y == y+height-1)) cout << "-";
+            if (((_y == y) || (_y == y+height-1)) && ((_x == x) || (_x == x+width-1))) cout << corner;
+            else if ((_x == x) || (_x == x+width-1)) cout << v;
+            else if ((_y == y) || (_y == y+height-1)) cout << h;
             else cout << fill;
         }
     }
     
 }
 
-void title_up(string title, char split_fill) {
+void title_up(string title, char split_fill, string color) {
     int consolewidth = getTerminalSize_WIDTH();
     int uiTextSize = title.length();
     int medium = (int)((consolewidth / 2) - (uiTextSize / 2)) - 1;
     margin(medium, ' ');
-    cout << title;
+    cout << color << title << getColor(0);
     cout << endl;
     margin(medium*2 + uiTextSize + 1, split_fill);
-
-    
 }
+// \033[ m
 
 void TextAnim(int delay,string text){
     int mult = 1;
