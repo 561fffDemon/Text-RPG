@@ -35,6 +35,8 @@ struct Entity
     
 };
 
+
+
 void sleep(int x) {
     std::this_thread::sleep_for(std::chrono::milliseconds(x));
 }
@@ -73,7 +75,24 @@ void gotoxy(short int x, short int y) {
     HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorPosition(output, pos);
 }
-
+void cursorMode(bool mode) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cinfo;
+    cinfo.bVisible = mode;
+    SetConsoleCursorInfo(hConsole, &cinfo);
+}
+void draw_popup(short int x, short int y, int width, int height, char fill, char corner, char h, char v){
+    for (int _y = y; _y < y+height; _y++){
+        for (int _x = x; _x < x+width; _x++){
+            gotoxy(_x,_y);
+            if (((_y == y) || (_y == y+height-1)) && ((_x == x) || (_x == x+width-1))) cout << corner;
+            else if ((_x == x) || (_x == x+width-1)) cout << v;
+            else if ((_y == y) || (_y == y+height-1)) cout << h;
+            else cout << fill;
+        }
+    }
+    
+}
 int getTerminalSize_WIDTH() {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     int columns;
@@ -82,7 +101,20 @@ int getTerminalSize_WIDTH() {
     columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     return columns;
 }
+void drawItem(short int x, short int y, int height, string title, int titleColor) {
+    draw_popup(x, y, (title.length() + 4), height, ' ', '#', '~', '|');
+    gotoxy(x+2,y+(int)(height/2));
+    cout << getColor(titleColor) << title << getColor(0);
+}
 
+void drawItems(short int x, short int y, int height, string* titles, int size, int titleColor) {
+    int offset = 0;
+    for (int i = 0; i < size; i++) {
+        drawItem(x + offset, y, height, titles[i], titleColor);
+        offset += titles[i].length()+4+2;
+        
+    }
+}
 int getTerminalSize_HEIGHT() {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     int rows;
@@ -153,18 +185,7 @@ void title_down(string title, char split_fill, string color) {
     cout << color << title << getColor(0);
 }
 
-void draw_popup(short int x, short int y, int width, int height, char fill, char corner, char h, char v){
-    for (int _y = y; _y < y+height; _y++){
-        for (int _x = x; _x < x+width; _x++){
-            gotoxy(_x,_y);
-            if (((_y == y) || (_y == y+height-1)) && ((_x == x) || (_x == x+width-1))) cout << corner;
-            else if ((_x == x) || (_x == x+width-1)) cout << v;
-            else if ((_y == y) || (_y == y+height-1)) cout << h;
-            else cout << fill;
-        }
-    }
-    
-}
+
 
 void title_up(string title, char split_fill, string color) {
     int consolewidth = getTerminalSize_WIDTH();
